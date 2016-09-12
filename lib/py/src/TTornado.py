@@ -91,7 +91,7 @@ class TTornadoStreamTransport(TTransportBase):
                 yield self.with_timeout(timeout, connect)
             else:
                 yield connect
-        except (socket.error, IOError, ioloop.TimeoutError) as e:
+        except (socket.error, IOError, ioloop.TimeoutError, Exception) as e:  # if timeout, gen raise a Exception
             message = 'could not connect to {}:{} ({})'.format(self.host, self.port, e)
             raise TTransportException(
                 type=TTransportException.NOT_OPEN,
